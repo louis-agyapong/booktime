@@ -1,9 +1,8 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from booktime.main.views import about, home
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", home, name="home"),
-    path("about/", about, name="about"),
+    path("", include("booktime.main.urls", namespace="main")),
 ]
