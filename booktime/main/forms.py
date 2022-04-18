@@ -1,5 +1,4 @@
 import logging
-from email import message
 
 from django import forms
 from django.core.mail import send_mail
@@ -12,13 +11,9 @@ class ContactForm(forms.Form):
     message = forms.CharField(label="Your message", max_length=600, widget=forms.Textarea)
 
     def send_mail(self):
-        logger.info("Send email to customer service")
+        logger.info("Sending email to customer service")
         from_email = "site@booktime.com"
+        subject = "BookTime - Customer Service"
+        recipient_list = ["customerservice@booktime.com"]
         message = f"From: {self.cleaned_data['name']}\n\n{self.cleaned_data['message']}"
-        send_mail(
-            subject="BookTime - Customer Service",
-            message=message,
-            from_email=from_email,
-            recipient_list=["customerservice@booktime.com"],
-            fail_silently=False,
-        )
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
